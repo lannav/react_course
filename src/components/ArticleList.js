@@ -1,39 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Article from './Article';
+import OpenCloseLogic from '../decorators/openCloseLogic';
 
-export default class ArticleList extends Component{
-    static propTypes = {
-        articles: PropTypes.array
-    };
+ArticleList.propTypes = {
+    articles: PropTypes.array
+};
 
-    state = {
-        openArticleId: null
-    };
+function ArticleList({ articles, toggleOpenArticle, openArticleId }) {
+    const articleElements = articles.map(article => <li key={article.id}>
+        <Article
+            article={article}
+            isOpen={article.id === openArticleId}
+            toggleOpen={toggleOpenArticle.bind(this, article.id)}
+        /></li>);
 
-    render() {
-        const { articles } = this.props;
-        
-        const articleElements = articles.map(article => <li key = {article.id}>
-            <Article
-                article = {article}
-                isOpen = {article.id === this.state.openArticleId}
-                toggleOpen = {this.toggleOpenArticle.bind(this, article.id)}
-            /></li>);
-
-        return (
-            <ul>
-                {articleElements}
-            </ul>
-        );
-    }
-
-    toggleOpenArticle(newId) {
-        const { openArticleId } = this.state;
-
-        if(newId === openArticleId)
-            this.setState({ openArticleId: null });
-        else
-            this.setState({ openArticleId: newId });
-    }
+    return (
+        <ul>
+            {articleElements}
+        </ul>
+    );
 }
+
+export default OpenCloseLogic(ArticleList);

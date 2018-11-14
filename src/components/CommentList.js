@@ -9,7 +9,7 @@ CommentList.propTypes = {
     toggleOpen: PropTypes.func.isRequired
 };
 
-function CommentList({comments = [], isOpen, toggleOpen}) {
+function CommentList({ comments = [], isOpen, toggleOpen }) {
     const text = isOpen ? 'hide comments' : 'show comments';
     return (
         <div>
