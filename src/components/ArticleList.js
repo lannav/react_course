@@ -1,25 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Article from './Article';
-import OpenCloseLogic from '../decorators/openCloseLogic';
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import Article from './Article'
+import accordion from '../decorators/accordion'
 
-ArticleList.propTypes = {
-    articles: PropTypes.array
-};
+class ArticleList extends Component {
+    static propTypes = {
+        articles: PropTypes.array.isRequired,
+        //from accordion
+        openItemId: PropTypes.string,
+        toggleOpenItem: PropTypes.func.isRequired
+    }
+    render() {
+        const { articles, openItemId, toggleOpenItem } = this.props
+        const articleElements = articles.map(article => <li key={article.id}>
+            <Article
+                article = {article}
+                isOpen = {article.id === openItemId}
+                toggleOpen = {toggleOpenItem(article.id)}
+            />
+        </li>)
 
-function ArticleList({ articles, toggleOpenArticle, openArticleId }) {
-    const articleElements = articles.map(article => <li key={article.id}>
-        <Article
-            article={article}
-            isOpen={article.id === openArticleId}
-            toggleOpen={toggleOpenArticle.bind(this, article.id)}
-        /></li>);
-
-    return (
-        <ul>
-            {articleElements}
-        </ul>
-    );
+        return (
+            <ul>
+                {articleElements}
+            </ul>
+        )
+    }
 }
 
-export default OpenCloseLogic(ArticleList);
+export default accordion(ArticleList)
