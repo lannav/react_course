@@ -4,6 +4,7 @@ import ArticleList from './ArticleList'
 import ArticlesChart from './ArticlesChart'
 import UserForm from './UserForm'
 import Select from 'react-select';
+import DayPickerForm from './DayPickerForm';
 import 'react-select/dist/react-select.css'
 
 class App extends Component {
@@ -22,6 +23,7 @@ class App extends Component {
         }));
         return (
             <div>
+                <DayPickerForm />
                 <UserForm />
                 <Select
                     options = { options }
